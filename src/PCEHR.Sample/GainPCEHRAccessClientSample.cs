@@ -43,41 +43,15 @@ namespace PCEHR.Sample
                 true
                 );
 
-<<<<<<< HEAD
-            // Create the PCEHR header
-            PCEHRHeader pcehrHeader = new PCEHRHeader();
+
+      // Create the PCEHR header
+
+      var pcehrHeader = PcehrHeaderHelper.CreateHeader();
 
             // IHI is always 16 digits long starting 800360.
-            pcehrHeader.ihiNumber = "8003608666885561";
+            pcehrHeader.IhiNumber = "8003608666885561";
 
-            // User Id may be a HPI-I for those who are HPI-I eligible (AHPRA registered)
-            // HPI-I is always 16 digits long starting 800361
-            // For other users such as administration and support staff user ID is set to their local ID
-            pcehrHeader.User = new PCEHRHeaderUser();
-            pcehrHeader.User.ID = "AngusM";
-            // Set User.IDType to PCEHRHeaderUserIDType.LocalSystemIdentifier if the user.ID is a local ID rather than a HPI-I
-            pcehrHeader.User.IDType = PCEHRHeaderUserIDType.LocalSystemIdentifier;
-            pcehrHeader.User.userName = "Angus Millar";
-
-            pcehrHeader.accessingOrganisation = new PCEHRHeaderAccessingOrganisation();
-            pcehrHeader.accessingOrganisation.organisationName = "AngusADHA";
-            // HPI-O is always 16 digits long starting 800362
-            pcehrHeader.accessingOrganisation.organisationID = "8003629900019338";
-
-            pcehrHeader.clientSystemType = PCEHRHeaderClientSystemType.CIS;
-            // The below information can be found in the My Health Record Vendor Product 
-            // Details Form that you filled out and submitted
-            pcehrHeader.productType = new PCEHRHeaderProductType();
-            pcehrHeader.productType.platform = "Windows";
-            pcehrHeader.productType.productName = "NEHTA HIPS";
-            pcehrHeader.productType.productVersion = "6.1";
-            pcehrHeader.productType.vendor = "HIPS0001";
-=======
-            // Create PCEHR header
-            CommonPcehrHeader header = PcehrHeaderHelper.CreateHeader();
-            // Override this value to the current patient's IHI.
-            header.IhiNumber = "IHI";
->>>>>>> ADHA/dependabot/nuget/src/PCEHR/DotNetZip-1.11.0
+            
 
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/gainPCEHRAccess"
@@ -94,12 +68,10 @@ namespace PCEHR.Sample
             // if gaining emergency access, include authorisationDetails and set accessType to “EmergencyAccess”
             // Only include the below to pass an access code or gain emergency access
             accessRequest.authorisationDetails = new gainPCEHRAccessPCEHRRecordAuthorisationDetails();
-<<<<<<< HEAD
+
             // "patient access code" is not required if the patient has open access for there record
             accessRequest.authorisationDetails.accessCode = "";
-=======
-            accessRequest.authorisationDetails.accessCode = "patient access code";
->>>>>>> ADHA/dependabot/nuget/src/PCEHR/DotNetZip-1.11.0
+          
             accessRequest.authorisationDetails.accessType = gainPCEHRAccessPCEHRRecordAuthorisationDetailsAccessType.AccessCode;
 
       
@@ -108,7 +80,7 @@ namespace PCEHR.Sample
             try
             {
                 // Invoke the service
-                responseStatusType responseStatus = gainPcehrAccessClient.GainPCEHRAccess(header, accessRequest, out individual);
+                responseStatusType responseStatus = gainPcehrAccessClient.GainPCEHRAccess(pcehrHeader, accessRequest, out individual);
 
                 // Get the soap request and response
                 string soapRequest = gainPcehrAccessClient.SoapMessages.SoapRequest;
