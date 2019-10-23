@@ -50,6 +50,8 @@ namespace PCEHR.Sample
 
             // Create PCEHR header
             CommonPcehrHeader header = PcehrHeaderHelper.CreateHeader();
+            // Override this value to the current patient's IHI.
+            header.IhiNumber = "IHI";
 
             // Create the client
             UploadDocumentMetadataClient uploadDocumentMetadataClient = new UploadDocumentMetadataClient(
@@ -67,8 +69,8 @@ namespace PCEHR.Sample
                 "unique repository ID",   
                 "formatCode",
                 "formatCodeName",
-                HealthcareFacilityTypeCodes.Transport,
-                PracticeSettingTypes.SpecialistMedicalPractitionerServiceNEC
+                HealthcareFacilityTypeCodes.GeneralPractice,
+                PracticeSettingTypes.GeneralPracticeMedicalClinicService
                 );
 
 

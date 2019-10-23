@@ -51,6 +51,8 @@ namespace PCEHR.Sample
 
             // Create PCEHR header
             CommonPcehrHeader header = PcehrHeaderHelper.CreateHeader();
+            // Override this value to the current patient's IHI.
+            header.IhiNumber = "IHI";
 
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getDocumentList"
@@ -77,6 +79,31 @@ namespace PCEHR.Sample
             {
                 // Invoke the service
                 AdhocQueryResponse queryResponse = documentListClient.GetDocumentList(header, queryRequest);
+
+                // Process data into a more simple model
+                XdsRecord[] data = XdsMetadataHelper.ProcessXdsMetadata(queryResponse.RegistryObjectList.ExtrinsicObject);
+
+                // For displaying the data in a list
+                foreach (var row in data)
+                {
+                    // Convert dates from UTC to local time
+                    //row.creationTimeUTC.ToLocalTime();
+                    //row.serviceStopTimeUTC.ToLocalTime();
+
+                    // Document name
+                    //row.classCodeDisplayName 
+
+                    // Organisation
+                    //row.authorInstitution.institutionName 
+
+                    // Organisation Type
+                    //row.healthcareFacilityTypeCodeDisplayName
+
+                    // Identifiers to retrieve the document
+                    //row.repositoryUniqueId  
+                    //row.documentId 
+                }
+
 
                 // Get the soap request and response
                 string soapRequest = documentListClient.SoapMessages.SoapRequest;

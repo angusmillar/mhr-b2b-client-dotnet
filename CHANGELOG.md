@@ -1,5 +1,20 @@
 ### Change Log/Revision History
 
+1.2.1
+------------------
+- Added support for multiple ACI subtype documents (ACP + GoC)
+
+1.2.0
+------------------
+- Added ENUMs for PathologyOverview and DiagnosticImagingOverview
+- Fixed support for uploading ACP documents
+- As per DEXS-T-123, serviceStartTime and serviceStopTime must be at least 8 chars long
+
+1.1.0
+------------------
+- Added PCML ENUM for support future release  
+- Added  Helper function to process getDocumentList XDS data into simple class XDSRecord
+- Updated PCML to PSML description
 
 1.0.6
 ------------------

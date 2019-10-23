@@ -180,10 +180,16 @@ namespace Nehta.VendorLibrary.PCEHR
             documentTypeCode_cl07 = documentTypeCode;
             documentTypeDisplayName_cl07 = documentTypeDisplayName;
             documentTypeCodeSystemName_cl07 = documentTypeCodeSystemName;
-            // The exception is for Advance Care Information/Advance Care Planning Document
+
+            // The exception is for Advance Care Information = which has Advance Care Planning Document/Goals of Care Document subtypes
             if (documentTypeCode == "100.16975")
             {
-                documentTypeDisplayName_cl07 = classCode.GetAttributeValue<CodedValueAttribute, string>(a => a.ConceptName);
+                // Get document desc and code from the body
+                documentTypeCode_cl07 = CheckNullValue(cdaDocument.SelectSingleNode("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:act/cda:reference/cda:externalDocument/cda:code/@code", xnm));
+                documentTypeDisplayName_cl07 = CheckNullValue(cdaDocument.SelectSingleNode("/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section/cda:entry/cda:act/cda:reference/cda:externalDocument/cda:code/@displayName", xnm));
+
+                if (documentTypeCode_cl07 == "" || documentTypeDisplayName_cl07 == "")
+                    throw new ArgumentException("The Advance Care Information does not reference an externalDocument.");
             }
 
             // Get time stuff
@@ -308,6 +314,12 @@ namespace Nehta.VendorLibrary.PCEHR
 
                 serviceStopTime = ConvertTimeToUtc(serviceStopTime);
             }
+
+            // As per DEXS-T123, serviceStartTime and serviceStopTime must be at least 8 chars long eg UTC formats: YYYYMMDD, YYYYMMDDhhmm, and YYYYMMDDhhmmss
+            if (serviceStartTime.Length < 8)
+                throw new ArgumentException("The serviceStartTime retrieved from the CDA document must be at least 8 digits long.");
+            if (serviceStopTime.Length < 8)
+                throw new ArgumentException("The serviceStopTime retrieved from the CDA document must be at least 8 digits long.");
 
             // Get Data
             languageCode = CheckNullValue(cdaDocument.SelectSingleNode("/cda:ClinicalDocument/cda:languageCode/@code", xnm));

@@ -8,8 +8,8 @@
     <ProjectGuid>{DC5F3E39-5D6D-4EA1-8032-CBF6EB0D7A3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nehta.VendorLibrary.PCEHR</RootNamespace>
-    <AssemblyName>Nehta.VendorLibrary.PCEHR</AssemblyName>
+    <RootNamespace>Nehta.VendorLibrary.MHR</RootNamespace>
+    <AssemblyName>Nehta.VendorLibrary.MHR</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -38,6 +38,10 @@
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nehta.VendorLibrary.Common, Version=4.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nehta.VendorLibrary.Common.4.2.1\lib\net40\Nehta.VendorLibrary.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -99,6 +103,7 @@
     <Compile Include="Helper\XdsMetadataHelper.cs" />
     <Compile Include="Helper\PCEHRHeaderValidator.cs" />
     <Compile Include="GeneratorCodeModifications\PCEHR_GetView10.cs" />
+    <Compile Include="Helper\XdsRecord.cs" />
     <Compile Include="RegisterPCEHRClient.cs" />
     <Compile Include="SearchTemplateClient.cs" />
     <Compile Include="GetTemplateClient.cs" />
@@ -129,12 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{0bdb0698-cb73-4e7b-a182-805831d3a5ac}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
