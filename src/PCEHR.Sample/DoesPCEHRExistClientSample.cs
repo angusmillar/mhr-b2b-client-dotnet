@@ -47,7 +47,7 @@ namespace PCEHR.Sample
 
             // Obtain the certificate for use with TLS and signing
             X509Certificate2 cert = X509CertificateUtil.GetCertificate(
-                "Serial Number",
+                "06fba6",
                 X509FindType.FindBySerialNumber,
                 StoreName.My,
                 StoreLocation.CurrentUser,
@@ -61,7 +61,7 @@ namespace PCEHR.Sample
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/doesPCEHRExist"
             // Production endpoint is "https://services.ehealth.gov.au/doesPCEHRExist"
-            DoesPCEHRExistClient doesPcehrExistClient = new DoesPCEHRExistClient(new Uri("https://DoesPCEHRExistEndpoint"), cert, cert);
+            DoesPCEHRExistClient doesPcehrExistClient = new DoesPCEHRExistClient(new Uri("https://b2b.ehealthvendortest.health.gov.au/doesPCEHRExist"), cert, cert);
 
             // Add server certificate validation callback
             ServicePointManager.ServerCertificateValidationCallback += ValidateServiceCertificate;

@@ -170,7 +170,7 @@ namespace PCEHR.Sample
         {
             // Obtain the certificate for use with TLS and signing
             X509Certificate2 cert = X509CertificateUtil.GetCertificate(
-                "Serial Number",
+                "06fba6",
                 X509FindType.FindBySerialNumber,
                 StoreName.My,
                 StoreLocation.CurrentUser,
@@ -183,7 +183,7 @@ namespace PCEHR.Sample
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getView"
             // production endpoint is "https://services.ehealth.gov.au/getView"
-            GetViewClient getViewClient = new GetViewClient(new Uri("https://GetViewEndpoint"), cert, cert);
+            GetViewClient getViewClient = new GetViewClient(new Uri("https://b2b.ehealthvendortest.health.gov.au/getView"), cert, cert);
 
             // Add server certificate validation callback
             ServicePointManager.ServerCertificateValidationCallback += ValidateServiceCertificate;
@@ -195,12 +195,12 @@ namespace PCEHR.Sample
                     // Creates a pathologyReportView
                     view = new pathologyReportView()
                     {
-                        fromDate = DateTime.Now.AddDays(-10),
+                        fromDate = new DateTime(1999, 01, 01),
                         toDate = DateTime.Now,
                         // versionNumber can be found in the "PCEHR View Service - Technical Service Specification" via
                         // https://digitalhealth.gov.au/implementation-resources/national-infrastructure/EP-2109-2015
                         // If the specification doesn't specify the version number then it is 1.0
-                        versionNumber = "Version number here"
+                        versionNumber = "1.0"
                     }
 
                 };
@@ -341,7 +341,7 @@ namespace PCEHR.Sample
         {
             // Obtain the certificate for use with TLS and signing
             X509Certificate2 cert = X509CertificateUtil.GetCertificate(
-                "Serial Number",
+                "06fba6",
                 X509FindType.FindBySerialNumber,
                 StoreName.My,
                 StoreLocation.CurrentUser,
@@ -354,7 +354,7 @@ namespace PCEHR.Sample
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getView"
             // production endpoint is "https://services.ehealth.gov.au/getView"
-            GetViewClient getViewClient = new GetViewClient(new Uri("https://GetViewEndpoint"), cert, cert);
+            GetViewClient getViewClient = new GetViewClient(new Uri("https://b2b.ehealthvendortest.health.gov.au/getView"), cert, cert);
 
             // Add server certificate validation callback
             ServicePointManager.ServerCertificateValidationCallback += ValidateServiceCertificate;
@@ -370,7 +370,7 @@ namespace PCEHR.Sample
                         // versionNumber can be found in the "PCEHR View Service - Technical Service Specification" via
                         // https://digitalhealth.gov.au/implementation-resources/national-infrastructure/EP-2109-2015
                         // If the specification doesn't specify the version number then it is 1.0
-                        versionNumber = "Version number here"
+                        versionNumber = "1.2"
                     }
                 };
 

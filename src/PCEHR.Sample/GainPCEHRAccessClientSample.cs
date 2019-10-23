@@ -36,7 +36,7 @@ namespace PCEHR.Sample
         {
             // Obtain the certificate for use with TLS and signing
             X509Certificate2 cert = X509CertificateUtil.GetCertificate(
-                "Serial Number",
+                "06fba6",
                 X509FindType.FindBySerialNumber,
                 StoreName.My,
                 StoreLocation.CurrentUser,
@@ -47,35 +47,35 @@ namespace PCEHR.Sample
             PCEHRHeader pcehrHeader = new PCEHRHeader();
 
             // IHI is always 16 digits long starting 800360.
-            pcehrHeader.ihiNumber = "IHI";
+            pcehrHeader.ihiNumber = "8003608666885561";
 
             // User Id may be a HPI-I for those who are HPI-I eligible (AHPRA registered)
             // HPI-I is always 16 digits long starting 800361
             // For other users such as administration and support staff user ID is set to their local ID
             pcehrHeader.User = new PCEHRHeaderUser();
-            pcehrHeader.User.ID = "user ID";
+            pcehrHeader.User.ID = "AngusM";
             // Set User.IDType to PCEHRHeaderUserIDType.LocalSystemIdentifier if the user.ID is a local ID rather than a HPI-I
-            pcehrHeader.User.IDType = PCEHRHeaderUserIDType.HPII;
-            pcehrHeader.User.userName = "user name";
+            pcehrHeader.User.IDType = PCEHRHeaderUserIDType.LocalSystemIdentifier;
+            pcehrHeader.User.userName = "Angus Millar";
 
             pcehrHeader.accessingOrganisation = new PCEHRHeaderAccessingOrganisation();
-            pcehrHeader.accessingOrganisation.organisationName = "organisation name";
+            pcehrHeader.accessingOrganisation.organisationName = "AngusADHA";
             // HPI-O is always 16 digits long starting 800362
-            pcehrHeader.accessingOrganisation.organisationID = "organisation HPIO";
+            pcehrHeader.accessingOrganisation.organisationID = "8003629900019338";
 
             pcehrHeader.clientSystemType = PCEHRHeaderClientSystemType.CIS;
             // The below information can be found in the My Health Record Vendor Product 
             // Details Form that you filled out and submitted
             pcehrHeader.productType = new PCEHRHeaderProductType();
-            pcehrHeader.productType.platform = "platform";
-            pcehrHeader.productType.productName = "product name";
-            pcehrHeader.productType.productVersion = "product version";
-            pcehrHeader.productType.vendor = "product vendor";
+            pcehrHeader.productType.platform = "Windows";
+            pcehrHeader.productType.productName = "NEHTA HIPS";
+            pcehrHeader.productType.productVersion = "6.1";
+            pcehrHeader.productType.vendor = "HIPS0001";
 
             // Instantiate the client
             // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/gainPCEHRAccess"
             // production endpoint is "https://services.ehealth.gov.au/gainPCEHRAccess"
-            GainPCEHRAccessClient gainPcehrAccessClient = new GainPCEHRAccessClient(new Uri("https://GainPCEHRAccessEndpoint"), cert, cert);
+            GainPCEHRAccessClient gainPcehrAccessClient = new GainPCEHRAccessClient(new Uri("https://b2b.ehealthvendortest.health.gov.au/gainPCEHRAccess"), cert, cert);
 
             // Create PCEHR header
             CommonPcehrHeader header = PcehrHeaderHelper.CreateHeader();
@@ -87,10 +87,11 @@ namespace PCEHR.Sample
             gainPCEHRAccessPCEHRRecord accessRequest = new gainPCEHRAccessPCEHRRecord();
             accessRequest.authorisationDetails = new gainPCEHRAccessPCEHRRecordAuthorisationDetails();
             // "patient access code" is not required if the patient has open access for there record
-            accessRequest.authorisationDetails.accessCode = "patient access code";
+            accessRequest.authorisationDetails.accessCode = "";
             accessRequest.authorisationDetails.accessType = gainPCEHRAccessPCEHRRecordAuthorisationDetailsAccessType.AccessCode;
 
-            gainPCEHRAccessResponseIndividual individual = new gainPCEHRAccessResponseIndividual();
+      
+             gainPCEHRAccessResponseIndividual individual = new gainPCEHRAccessResponseIndividual();
             
             try
             {
