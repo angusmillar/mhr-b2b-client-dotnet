@@ -14,14 +14,24 @@ namespace PCEHR.Test.Support
       // Create the PCEHR header
       var pcehrHeader = new CommonPcehrHeader();
       pcehrHeader.IhiNumber = "8003608666701594";
+
+      Console.WriteLine($"-Patient--------------------------------------------------------------");
+      Console.WriteLine($"Name: Frank Harding");
+      Console.WriteLine($"IHI: {pcehrHeader.IhiNumber}");
+      Console.WriteLine($"----------------------------------------------------------------------");
+
       return Common(pcehrHeader);
     }
 
     public static CommonPcehrHeader CreateHeaderDerringtonCaleb()
     {
-      // Create the PCEHR header
       var pcehrHeader = new CommonPcehrHeader();
       pcehrHeader.IhiNumber = "8003608000045922";
+
+      Console.WriteLine($"-Patient--------------------------------------------------------------");
+      Console.WriteLine($"Name: Derrington Caleb");
+      Console.WriteLine($"IHI: {pcehrHeader.IhiNumber}");
+      Console.WriteLine($"----------------------------------------------------------------------");
       return Common(pcehrHeader);
     }
 

@@ -55,8 +55,12 @@
   <ItemGroup>
     <Compile Include="DoesPCEHRExist.cs" />
     <Compile Include="GainAccess.cs" />
+    <Compile Include="GetChangeHistoryView.cs" />
+    <Compile Include="GetDocument.cs" />
+    <Compile Include="Support\CertificateHelper.cs" />
     <Compile Include="Support\PcehrHeaderHelper.cs" />
     <Compile Include="UploadDocument.cs" />
+    <Compile Include="GetDocumentList.cs" />
     <Compile Include="ViewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
