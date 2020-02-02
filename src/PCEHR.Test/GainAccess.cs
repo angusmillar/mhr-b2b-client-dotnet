@@ -18,9 +18,9 @@ namespace PCEHR.Test
     {
       // Obtain the certificate for use with TLS and signing
       X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
-      
+
       // Create the PCEHR header
-      var pcehrHeader = Support.PcehrHeaderHelper.CreateHeaderDerringtonCaleb();
+      var pcehrHeader = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
      
       // Instantiate the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/gainPCEHRAccess"

@@ -8,33 +8,38 @@ namespace PCEHR.Test.Support
 {
   public static class PcehrHeaderHelper
   {
+    
     public static string UploadingHPIO = "8003629900019338";
-    public static CommonPcehrHeader CreateHeaderFrankHarding()
-    {
-      // Create the PCEHR header
-      var pcehrHeader = new CommonPcehrHeader();
-      pcehrHeader.IhiNumber = "8003608666701594";
 
-      Console.WriteLine($"-Patient--------------------------------------------------------------");
-      Console.WriteLine($"Name: Frank Harding");
-      Console.WriteLine($"IHI: {pcehrHeader.IhiNumber}");
-      Console.WriteLine($"----------------------------------------------------------------------");
-
-      return Common(pcehrHeader);
-    }
-
-    public static CommonPcehrHeader CreateHeaderDerringtonCaleb()
+    public static CommonPcehrHeader CreateHeader(PatientType patientType)
     {
       var pcehrHeader = new CommonPcehrHeader();
-      pcehrHeader.IhiNumber = "8003608000045922";
+      string PatientName = string.Empty;
+      switch (patientType)
+      {
+        case PatientType.FrankHarding:
+          PatientName = "Frank Harding";
+          pcehrHeader.IhiNumber = "8003608666701594";
+          break;
+        case PatientType.CalebDerrington:
+          PatientName = "Caleb Derrington";
+          pcehrHeader.IhiNumber = "8003608000045922";
+          break;
+        case PatientType.JackieHunt:
+          PatientName = "Jackie Hunt";
+          pcehrHeader.IhiNumber = "8003608500179916";
+          break;
+        default:
+          break;
+      }
 
       Console.WriteLine($"-Patient--------------------------------------------------------------");
-      Console.WriteLine($"Name: Derrington Caleb");
+      Console.WriteLine($"Name: {PatientName}");
       Console.WriteLine($"IHI: {pcehrHeader.IhiNumber}");
       Console.WriteLine($"----------------------------------------------------------------------");
       return Common(pcehrHeader);
     }
-
+    
     public static CommonPcehrHeader Common(CommonPcehrHeader CommonPcehrHeader)
     {
       //User ID should be a HPI-I if the user is HPI-I eligible (i.e. AHPRA registered)
@@ -48,7 +53,7 @@ namespace PCEHR.Test.Support
       // HPI-O is always 16 digits long
       CommonPcehrHeader.OrganisationName = "AngusADHA";
       CommonPcehrHeader.OrganisationId = UploadingHPIO;
-
+      
       CommonPcehrHeader.ClientSystemType = CommonPcehrHeaderClientSystemType.CIS;
 
       // Below information can be found in the My Health Record Vendor Product Details Form

@@ -27,9 +27,9 @@ namespace PCEHR.Test
       X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
       
       // Create PCEHR header
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeaderDerringtonCaleb();      
+      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.FrankHarding);
 
-      
+
 
       // Instantiate the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getDocumentList"
@@ -41,9 +41,10 @@ namespace PCEHR.Test
 
       // Create a query 
       AdhocQueryBuilder adhocQueryBuilder = new AdhocQueryBuilder(header.IhiNumber, new[] { DocumentStatus.Approved });
-      adhocQueryBuilder.ServiceStartTimeFrom = new ISO8601DateTime(new DateTime(2010, 10, 16));
-      adhocQueryBuilder.ServiceStopTimeTo = new ISO8601DateTime(new DateTime(2019, 10, 25));
-      adhocQueryBuilder.ClassCode = new List<ClassCodes>() { ClassCodes.PathologyResultReport };
+      adhocQueryBuilder.ServiceStartTimeFrom = new ISO8601DateTime(new DateTime(2018, 11, 20));
+      adhocQueryBuilder.ServiceStopTimeTo = new ISO8601DateTime(DateTime.Now);
+      //adhocQueryBuilder.ClassCode = new List<ClassCodes>() { ClassCodes.EventSummary };
+      adhocQueryBuilder.ClassCode = new List<ClassCodes>();
       // To further filter documents, build on the adhocQueryBuilder helper functions
       // For example, filtering on document type
       // adhocQueryBuilder.ClassCode = new List<ClassCodes>() {ClassCodes.DischargeSummary};
@@ -74,17 +75,22 @@ namespace PCEHR.Test
 
           // For displaying the data in a list
           Console.WriteLine($"Total Documents {data.Count().ToString()}");
-          foreach (var row in data)
+          foreach (var row in data.OrderByDescending(x => x.creationTimeUTC))
           {
             Console.WriteLine($"----------------------------------------------------------------------");
             Console.WriteLine($"DocumentId: {row.documentId}");
-            Console.WriteLine($"Repository Unique Id: {row.repositoryUniqueId}");
             Console.WriteLine($"ClassCode DisplayName: {row.classCodeDisplayName}");
             Console.WriteLine($"TypeCode DisplayName: {row.typeCodeDisplayName}");
+            Console.WriteLine($"Creation Time UTC: {row.creationTimeUTC.ToString()}");
+            Console.WriteLine($"Service Start Time UTC: {row.serviceStartTimeUTC.ToString()}");
+            Console.WriteLine($"Service Stop Time UTC: {row.serviceStopTimeUTC.ToString()}");
+            Console.WriteLine($"Healthcare Facility TypeCode DisplayName: {row.healthcareFacilityTypeCodeDisplayName}");
+            Console.WriteLine($"Repository Unique Id: {row.repositoryUniqueId}");
             Console.WriteLine($"Status: {row.status}");
             Console.WriteLine($"Remove Reason: {row.removeReason}");
             Console.WriteLine($"Record Version: {row.recordVersion}");
-            
+            Console.WriteLine($"AuthorInstitution.InstitutionName: {row.authorInstitution.institutionName}");
+
 
 
 

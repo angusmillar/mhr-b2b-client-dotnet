@@ -20,16 +20,10 @@ namespace PCEHR.Test
     public void Upload()
     {
       // Obtain the certificate for use with TLS and signing
-      X509Certificate2 cert = X509CertificateUtil.GetCertificate(
-          "06fba6",
-          X509FindType.FindBySerialNumber,
-          StoreName.My,
-          StoreLocation.CurrentUser,
-          true
-          );
+      X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
 
       // Create PCEHR header
-      CommonPcehrHeader header = PCEHR.Test.Support.PcehrHeaderHelper.CreateHeaderDerringtonCaleb();
+      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
 
       // Create the client
       // SVT endpoint is https://b2b.ehealthvendortest.health.gov.au/uploadDocument
@@ -38,9 +32,9 @@ namespace PCEHR.Test
           new Uri("https://b2b.ehealthvendortest.health.gov.au/uploadDocument"), cert, cert);
 
       // Add server certificate validation callback
-      ServicePointManager.ServerCertificateValidationCallback += ValidateServiceCertificate;
+      ServicePointManager.ServerCertificateValidationCallback += Support.CertificateHelper.ValidateServiceCertificate;
 
-      byte[] packageBytes = File.ReadAllBytes(@"C:\temp\MyHealthRecordTools\CDAPackager\Output\LastRun\CdaPackage.zip"); // Create a package
+      byte[] packageBytes = File.ReadAllBytes(@"C:\temp\MyHealthRecordTools\CDAPackager\Output\LastOutputRun\CdaPackage.zip"); // Create a package
 
       // Create a request to register a new document on the PCEHR.
       // Create a request to register a new document on the PCEHR.
@@ -52,12 +46,14 @@ namespace PCEHR.Test
       // "eHealth Dispense Record" - 1.2.36.1.2001.1006.1.171.5
       // "Pathology Report" - 1.2.36.1.2001.1006.1.220.4
       // "Diagnostic Imaging Report" - 1.2.36.1.2001.1006.1.222.4
+      //  "Discharge Summary" - 1.2.36.1.2001.1006.1.20000.18
       ProvideAndRegisterDocumentSetRequestType request = uploadDocumentClient.CreateRequestForNewDocument(
           packageBytes,
-          "1.2.36.1.2001.1006.1.220.4",
-          "eHealth Pathology Report",
-          HealthcareFacilityTypeCodes.Transport,
-          PracticeSettingTypes.SpecialistMedicalPractitionerServiceNEC
+          "1.2.36.1.2001.1006.1.20000.18",
+          "Discharge Summary",
+          //You must chooose a valid type below
+          HealthcareFacilityTypeCodes.Hospitals,
+          PracticeSettingTypes.GeneralHospital
           );
 
       // To supercede / amend an existing document, the same UploadDocument call is used. However, the request is 
@@ -67,14 +63,14 @@ namespace PCEHR.Test
       // the uuidOfDocumentToReplace must be converted to OID format and include the repository OID. 
       // (i.e. a document being replaced in the My Health Record repository is)
 
-      // ProvideAndRegisterDocumentSetRequestType request = uploadDocumentClient.CreateRequestForReplacement(
-      //    packageBytes,
-      //    "formatCode",
-      //    "formatCodeName",
-      //    HealthcareFacilityTypeCodes.Transport,
-      //    PracticeSettingTypes.SpecialistMedicalPractitionerServiceNEC,
-      //    "uuidOfDocumentToReplace"
-      //    );
+      //ProvideAndRegisterDocumentSetRequestType request = uploadDocumentClient.CreateRequestForReplacement(
+      //   packageBytes,
+      //   "1.2.36.1.2001.1006.1.220.4",
+      //    "Pathology Report",
+      //   HealthcareFacilityTypeCodes.Hospitals,
+      //   PracticeSettingTypes.GeneralHospital,
+      //   "2.25.311256170906902265756795034001543718058" //Document Id of doc to replace
+      //   );
 
       // When uploading to the NPDR where the repository unique ID, document size and hash may need to be included
       // in the metadata, use the utility function below.
@@ -88,7 +84,7 @@ namespace PCEHR.Test
 
         // Get the soap request and response
         string soapRequest = uploadDocumentClient.SoapMessages.SoapRequest;
-        string soapResponse = uploadDocumentClient.SoapMessages.SoapResponse;
+        string soapResponse = uploadDocumentClient.SoapMessages.SoapResponse;        
       }
       catch (FaultException fex)
       {
@@ -96,13 +92,6 @@ namespace PCEHR.Test
       }
     }
 
-    private bool ValidateServiceCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-    {
-      // Checks can be done here to validate the service certificate.
-      // If the service certificate contains any problems or is invalid, return false. Otherwise, return true.
-      // This example returns true to indicate that the service certificate is valid.
-      return true;
-    }
   }
 
 

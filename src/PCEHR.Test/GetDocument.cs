@@ -22,9 +22,9 @@ namespace PCEHR.Test
       X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
 
       // Create PCEHR header  (See PcehrHeaderHelper.cs)
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeaderDerringtonCaleb();
-      
-     
+      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
+
+
       // Create the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getDocument"
       // production endpoint is "https://services.ehealth.gov.au/getDocument"
@@ -41,9 +41,9 @@ namespace PCEHR.Test
       request.Add(new RetrieveDocumentSetRequestTypeDocumentRequest()
       {
         // This should be the value of the ExternalIdentifier "XDSDocumentEntry.uniqueId" in the GetDocumentList response
-        DocumentUniqueId = "2.25.33982669477651998710317483962006911980",
+        DocumentUniqueId = "2.25.33490668245960833374336.20101016.20191025",
         // This should be the value of "repositoryUniqueId" in the GetDocumentList response
-        RepositoryUniqueId = "1.2.36.1.2001.1007.10.8003640002000050"
+        RepositoryUniqueId = "1.2.36.1.2001.1007.10.8003640002000118"
       });
 
       try

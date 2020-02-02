@@ -51,6 +51,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DoesPCEHRExist.cs" />
@@ -58,7 +60,9 @@
     <Compile Include="GetChangeHistoryView.cs" />
     <Compile Include="GetDocument.cs" />
     <Compile Include="Support\CertificateHelper.cs" />
+    <Compile Include="Support\PatientTypeEnum.cs" />
     <Compile Include="Support\PcehrHeaderHelper.cs" />
+    <Compile Include="RemoveDocument.cs" />
     <Compile Include="UploadDocument.cs" />
     <Compile Include="GetDocumentList.cs" />
     <Compile Include="ViewService.cs" />

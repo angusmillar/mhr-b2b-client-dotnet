@@ -22,7 +22,7 @@ namespace PCEHR.Test
       X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
 
       // Create PCEHR header
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeaderFrankHarding();
+      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
       
 
       // Instantiate the client
