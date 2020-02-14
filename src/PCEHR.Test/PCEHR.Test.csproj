@@ -55,10 +55,12 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CertAndHeaderInfo.cs" />
     <Compile Include="DoesPCEHRExist.cs" />
     <Compile Include="GainAccess.cs" />
     <Compile Include="GetChangeHistoryView.cs" />
     <Compile Include="GetDocument.cs" />
+    <Compile Include="Support\CertAndHeaderFactory.cs" />
     <Compile Include="Support\CertificateHelper.cs" />
     <Compile Include="Support\PatientTypeEnum.cs" />
     <Compile Include="Support\PcehrHeaderHelper.cs" />

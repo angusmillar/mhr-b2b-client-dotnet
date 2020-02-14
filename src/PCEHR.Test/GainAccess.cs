@@ -16,12 +16,18 @@ namespace PCEHR.Test
     [TestMethod]
     public void Run()
     {
-      // Obtain the certificate for use with TLS and signing
-      X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
+      //Get Certificate and Header objects
+      CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
+        certSerial: "06fba6",
+        serialHPIO: "8003629900019338",
+        patientType: Support.PatientType.CalebDerrington);
 
-      // Create the PCEHR header
-      var pcehrHeader = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
-     
+      // Obtain the certificate for use with TLS and signing
+      X509Certificate2 cert = CertAndHeaderInfo.Certificate;
+
+      // Create PCEHR header
+      CommonPcehrHeader header = CertAndHeaderInfo.Header;
+
       // Instantiate the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/gainPCEHRAccess"
       // production endpoint is "https://services.ehealth.gov.au/gainPCEHRAccess"
@@ -49,7 +55,7 @@ namespace PCEHR.Test
       try
       {
         // Invoke the service
-        responseStatusType responseStatus = gainPcehrAccessClient.GainPCEHRAccess(pcehrHeader, accessRequest, out individual);
+        responseStatusType responseStatus = gainPcehrAccessClient.GainPCEHRAccess(header, accessRequest, out individual);
 
         // Get the soap request and response
         string soapRequest = gainPcehrAccessClient.SoapMessages.SoapRequest;

@@ -19,11 +19,17 @@ namespace PCEHR.Test
     [TestMethod]
     public void Upload()
     {
+      //Get Certificate and Header objects
+      CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
+        certSerial: "06fba6",
+        serialHPIO: "8003629900019338",
+        patientType: Support.PatientType.CalebDerrington);
+
       // Obtain the certificate for use with TLS and signing
-      X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
+      X509Certificate2 cert = CertAndHeaderInfo.Certificate;
 
       // Create PCEHR header
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
+      CommonPcehrHeader header = CertAndHeaderInfo.Header;
 
       // Create the client
       // SVT endpoint is https://b2b.ehealthvendortest.health.gov.au/uploadDocument
@@ -46,14 +52,15 @@ namespace PCEHR.Test
       // "eHealth Dispense Record" - 1.2.36.1.2001.1006.1.171.5
       // "Pathology Report" - 1.2.36.1.2001.1006.1.220.4
       // "Diagnostic Imaging Report" - 1.2.36.1.2001.1006.1.222.4
-      //  "Discharge Summary" - 1.2.36.1.2001.1006.1.20000.18
+      // "Discharge Summary" - 1.2.36.1.2001.1006.1.20000.18
+      // "eHealth Dispense Record" - 1.2.36.1.2001.1006.1.171.4
       ProvideAndRegisterDocumentSetRequestType request = uploadDocumentClient.CreateRequestForNewDocument(
           packageBytes,
-          "1.2.36.1.2001.1006.1.20000.18",
-          "Discharge Summary",
+          "1.2.36.1.2001.1006.1.171.4",
+          "eHealth Dispense Record",
           //You must chooose a valid type below
-          HealthcareFacilityTypeCodes.Hospitals,
-          PracticeSettingTypes.GeneralHospital
+          HealthcareFacilityTypeCodes.AmbulanceServices,
+          PracticeSettingTypes.AerialAmbulanceService
           );
 
       // To supercede / amend an existing document, the same UploadDocument call is used. However, the request is 

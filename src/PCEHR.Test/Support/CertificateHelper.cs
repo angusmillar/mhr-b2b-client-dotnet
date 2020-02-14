@@ -7,7 +7,11 @@ namespace PCEHR.Test.Support
 {
   public static class CertificateHelper
   {
+    //My Certificate
     public static string CertificateSerialNumber = "06fba6";
+    
+    //Sonic's Cert
+    //public static string CertificateSerialNumber = "07248d";
     public static X509Certificate2 GetCertificate()
     {
       // Obtain the certificate for use with TLS and signing
@@ -15,7 +19,20 @@ namespace PCEHR.Test.Support
           CertificateSerialNumber,
           X509FindType.FindBySerialNumber,
           StoreName.My,
-          StoreLocation.CurrentUser,
+          StoreLocation.LocalMachine,
+          true
+          );
+      return cert;
+    }
+
+    public static X509Certificate2 GetCertificate(string certSerial)
+    {
+      // Obtain the certificate for use with TLS and signing
+      X509Certificate2 cert = X509CertificateUtil.GetCertificate(
+          certSerial,
+          X509FindType.FindBySerialNumber,
+          StoreName.My,
+          StoreLocation.LocalMachine,
           true
           );
       return cert;

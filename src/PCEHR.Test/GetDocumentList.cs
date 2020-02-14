@@ -17,19 +17,23 @@ namespace PCEHR.Test
   {
     [TestMethod]
     public void Run()
-    {      
+    {
       // NASH certificate should be used here, NOT the HI certificate the NASH certificate can be found in the NASH PKI Test Kit
       // certificate needs to be installed in the right place
       // The "Issue To" field of a NASH certificate looks like general (or something different)."HPI-O".electronichealth.net.au
       // "Serial Number" can be found in the details once the certificate is installed.e.g. in Windows, certificates can be found in Certs.msc
 
+      //Get Certificate and Header objects
+      CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
+        certSerial: "06fba6",
+        serialHPIO: "8003629900019338",
+        patientType: Support.PatientType.CalebDerrington);
+
       // Obtain the certificate for use with TLS and signing
-      X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
-      
+      X509Certificate2 cert = CertAndHeaderInfo.Certificate;
+
       // Create PCEHR header
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.FrankHarding);
-
-
+      CommonPcehrHeader header = CertAndHeaderInfo.Header;
 
       // Instantiate the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getDocumentList"

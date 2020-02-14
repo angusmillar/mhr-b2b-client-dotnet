@@ -18,12 +18,17 @@ namespace PCEHR.Test
     [TestMethod]
     public void Run()
     {
+      //Get Certificate and Header objects
+      CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
+        certSerial: "06fba6",
+        serialHPIO: "8003629900019338",
+        patientType: Support.PatientType.CalebDerrington);
+
       // Obtain the certificate for use with TLS and signing
-      X509Certificate2 cert = Support.CertificateHelper.GetCertificate();
+      X509Certificate2 cert = CertAndHeaderInfo.Certificate;
 
-      // Create PCEHR header  (See PcehrHeaderHelper.cs)
-      CommonPcehrHeader header = Support.PcehrHeaderHelper.CreateHeader(Support.PatientType.CalebDerrington);
-
+      // Create PCEHR header
+      CommonPcehrHeader header = CertAndHeaderInfo.Header;
 
       // Create the client
       // SVT endpoint is "https://b2b.ehealthvendortest.health.gov.au/getDocument"

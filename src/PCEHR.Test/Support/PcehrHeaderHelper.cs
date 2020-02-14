@@ -9,9 +9,9 @@ namespace PCEHR.Test.Support
   public static class PcehrHeaderHelper
   {
     
-    public static string UploadingHPIO = "8003629900019338";
+   //public static string UploadingHPIO = "8003629900019338";
 
-    public static CommonPcehrHeader CreateHeader(PatientType patientType)
+    public static CommonPcehrHeader CreateHeader(PatientType patientType, string uploadingHPIO)
     {
       var pcehrHeader = new CommonPcehrHeader();
       string PatientName = string.Empty;
@@ -37,10 +37,10 @@ namespace PCEHR.Test.Support
       Console.WriteLine($"Name: {PatientName}");
       Console.WriteLine($"IHI: {pcehrHeader.IhiNumber}");
       Console.WriteLine($"----------------------------------------------------------------------");
-      return Common(pcehrHeader);
+      return Common(pcehrHeader, uploadingHPIO);
     }
     
-    public static CommonPcehrHeader Common(CommonPcehrHeader CommonPcehrHeader)
+    public static CommonPcehrHeader Common(CommonPcehrHeader CommonPcehrHeader, string uploadingHPIO)
     {
       //User ID should be a HPI-I if the user is HPI-I eligible (i.e. AHPRA registered)
       // If the user isn't HPI-I eligible (such as support staff and scientific staff) then set the user ID to a local ID and
@@ -52,7 +52,7 @@ namespace PCEHR.Test.Support
       // "organisation name" and "organisation HPIO" can be found in the NASH PKI Test Kit
       // HPI-O is always 16 digits long
       CommonPcehrHeader.OrganisationName = "AngusADHA";
-      CommonPcehrHeader.OrganisationId = UploadingHPIO;
+      CommonPcehrHeader.OrganisationId = uploadingHPIO;
       
       CommonPcehrHeader.ClientSystemType = CommonPcehrHeaderClientSystemType.CIS;
 
