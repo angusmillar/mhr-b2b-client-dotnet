@@ -18,11 +18,15 @@ namespace PCEHR.Test
     public void Run()
     {
 
+    //certSerial: "06fba6",        
+    //serialHPIO: "8003629900019338",     
+
+
       //Get Certificate and Header objects
       CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
         certSerial: "06fba6",
         serialHPIO: "8003629900019338",
-        patientType: Support.PatientType.CalebDerrington);
+        patientType: Support.PatientType.FrankHarding);
 
       // Obtain the certificate for use with TLS and signing
       X509Certificate2 cert = CertAndHeaderInfo.Certificate;

@@ -21,7 +21,7 @@ namespace PCEHR.Test
       CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
         certSerial: "06fba6",
         serialHPIO: "8003629900019338",
-        patientType: Support.PatientType.CalebDerrington);
+        patientType: Support.PatientType.LudwigHOBBS);
 
       // Obtain the certificate for use with TLS and signing
       X509Certificate2 cert = CertAndHeaderInfo.Certificate;
@@ -43,12 +43,12 @@ namespace PCEHR.Test
         var request = new removeDocument()
         {
           // this should be the value of the ExternalIdentifier "XDSDocumentEntry.uniqueId" in the GetDocumentList response
-          documentID = "2.25.311256170906902265756795034001543718058",
+          documentID = "2.25.262187743541392638493047310439698728609",
           // reasonForRemoval should be one of:
           // removeDocumentReasonForRemoval.IncorrectIdentity
           // removeDocumentReasonForRemoval.ElectToRemove
           // removeDocumentReasonForRemoval.Withdrawn
-          reasonForRemoval = removeDocumentReasonForRemoval.IncorrectIdentity
+          reasonForRemoval = removeDocumentReasonForRemoval.Withdrawn
         };
 
         // Invoke the service

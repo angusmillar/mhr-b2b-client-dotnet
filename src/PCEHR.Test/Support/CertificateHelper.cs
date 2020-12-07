@@ -32,7 +32,7 @@ namespace PCEHR.Test.Support
           certSerial,
           X509FindType.FindBySerialNumber,
           StoreName.My,
-          StoreLocation.LocalMachine,
+          StoreLocation.CurrentUser,
           true
           );
       return cert;

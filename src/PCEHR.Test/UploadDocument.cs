@@ -54,13 +54,15 @@ namespace PCEHR.Test
       // "Diagnostic Imaging Report" - 1.2.36.1.2001.1006.1.222.4
       // "Discharge Summary" - 1.2.36.1.2001.1006.1.20000.18
       // "eHealth Dispense Record" - 1.2.36.1.2001.1006.1.171.4
+      // "Goals of Care" - 1.2.36.1.2001.1006.1.100001.1
+      // "Event Summary" - 1.2.36.1.2001.1006.1.16473.12
       ProvideAndRegisterDocumentSetRequestType request = uploadDocumentClient.CreateRequestForNewDocument(
           packageBytes,
-          "1.2.36.1.2001.1006.1.171.4",
-          "eHealth Dispense Record",
+          "1.2.36.1.2001.1006.1.16473.12",
+          "Event Summary",
           //You must chooose a valid type below
-          HealthcareFacilityTypeCodes.AmbulanceServices,
-          PracticeSettingTypes.AerialAmbulanceService
+          HealthcareFacilityTypeCodes.Hospitals,
+          PracticeSettingTypes.GeneralHospital
           );
 
       // To supercede / amend an existing document, the same UploadDocument call is used. However, the request is 

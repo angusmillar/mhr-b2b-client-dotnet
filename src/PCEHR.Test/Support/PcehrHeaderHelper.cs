@@ -29,6 +29,26 @@ namespace PCEHR.Test.Support
           PatientName = "Jackie Hunt";
           pcehrHeader.IhiNumber = "8003608500179916";
           break;
+        case PatientType.MaxwellThomas:
+          PatientName = "Maxwell Thomas";
+          pcehrHeader.IhiNumber = "8003608666889084";
+          break;
+        case PatientType.LudwigHOBBS:
+          PatientName = "Ludwig HOBBS";
+          pcehrHeader.IhiNumber = "8003608333345684";
+          break;
+        case PatientType.LarryBLAKE:
+          PatientName = "Larry BLAKE";
+          pcehrHeader.IhiNumber = "8003608833499130";
+          break;
+        case PatientType.AliceLAMM:
+          PatientName = "Alice LAMM";
+          pcehrHeader.IhiNumber = "8003608000166041";
+          break;
+        case PatientType.MarieVOSLOO:
+          PatientName = "Marie VOSLOO";
+          pcehrHeader.IhiNumber = "8003608333357747";
+          break;
         default:
           break;
       }

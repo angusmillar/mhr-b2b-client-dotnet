@@ -27,7 +27,7 @@ namespace PCEHR.Test
       CertAndHeaderInfo CertAndHeaderInfo = Support.CertAndHeaderFactory.Get(
         certSerial: "06fba6",
         serialHPIO: "8003629900019338",
-        patientType: Support.PatientType.CalebDerrington);
+        patientType: Support.PatientType.FrankHarding);
 
       // Obtain the certificate for use with TLS and signing
       X509Certificate2 cert = CertAndHeaderInfo.Certificate;
@@ -45,13 +45,24 @@ namespace PCEHR.Test
 
       // Create a query 
       AdhocQueryBuilder adhocQueryBuilder = new AdhocQueryBuilder(header.IhiNumber, new[] { DocumentStatus.Approved });
-      adhocQueryBuilder.ServiceStartTimeFrom = new ISO8601DateTime(new DateTime(2018, 11, 20));
-      adhocQueryBuilder.ServiceStopTimeTo = new ISO8601DateTime(DateTime.Now);
-      //adhocQueryBuilder.ClassCode = new List<ClassCodes>() { ClassCodes.EventSummary };
-      adhocQueryBuilder.ClassCode = new List<ClassCodes>();
+      adhocQueryBuilder.ServiceStartTimeFrom = new ISO8601DateTime(new DateTime(2018, 03, 18));
+      adhocQueryBuilder.ServiceStopTimeTo = new ISO8601DateTime(new DateTime(2020, 07, 17));
+
+      adhocQueryBuilder.ClassCode = new List<ClassCodes>()
+      {
+        ClassCodes.AdvanceCareDirectiveCustodianRecord,
+        ClassCodes.AdvanceCareInformation
+      };
+
+      //adhocQueryBuilder.TypeCode = new List<ClassCodes>()
+      //{
+      //  ClassCodes.AdvanceCareDirectiveCustodianRecord,
+      //  ClassCodes.AdvanceCareInformation
+      //};
+
       // To further filter documents, build on the adhocQueryBuilder helper functions
       // For example, filtering on document type
-      // adhocQueryBuilder.ClassCode = new List<ClassCodes>() {ClassCodes.DischargeSummary};
+      //adhocQueryBuilder.ClassCode = new List<ClassCodes>() {ClassCodes.AdvanceCareInformation};
       // See Table 3 XDSDocumentEntry Document Type and Class Code value set from 
       // the Document Exchange Service Technical Service Specification
 
@@ -76,24 +87,29 @@ namespace PCEHR.Test
         else
         {
           XdsRecord[] data = XdsMetadataHelper.ProcessXdsMetadata(queryResponse.RegistryObjectList.ExtrinsicObject);
-
+          int UseTimeZone = 11;
           // For displaying the data in a list
           Console.WriteLine($"Total Documents {data.Count().ToString()}");
+          Console.WriteLine($"{"Document Date".PadRight(23)} | {"Service Date".PadRight(23)} | {"Document".PadRight(35)} | {"Org".PadRight(35)} | {"Org Type".PadRight(35)}|");
+          Console.WriteLine($"================================================================================================================================================================================");
           foreach (var row in data.OrderByDescending(x => x.creationTimeUTC))
           {
-            Console.WriteLine($"----------------------------------------------------------------------");
-            Console.WriteLine($"DocumentId: {row.documentId}");
-            Console.WriteLine($"ClassCode DisplayName: {row.classCodeDisplayName}");
-            Console.WriteLine($"TypeCode DisplayName: {row.typeCodeDisplayName}");
-            Console.WriteLine($"Creation Time UTC: {row.creationTimeUTC.ToString()}");
-            Console.WriteLine($"Service Start Time UTC: {row.serviceStartTimeUTC.ToString()}");
-            Console.WriteLine($"Service Stop Time UTC: {row.serviceStopTimeUTC.ToString()}");
-            Console.WriteLine($"Healthcare Facility TypeCode DisplayName: {row.healthcareFacilityTypeCodeDisplayName}");
-            Console.WriteLine($"Repository Unique Id: {row.repositoryUniqueId}");
-            Console.WriteLine($"Status: {row.status}");
-            Console.WriteLine($"Remove Reason: {row.removeReason}");
-            Console.WriteLine($"Record Version: {row.recordVersion}");
-            Console.WriteLine($"AuthorInstitution.InstitutionName: {row.authorInstitution.institutionName}");
+
+
+
+            Console.WriteLine($"{row.creationTimeUTC.Add(TimeSpan.FromHours(UseTimeZone)).ToString().PadRight(23)} | {row.serviceStartTimeUTC.Add(TimeSpan.FromHours(UseTimeZone)).ToString().PadRight(23)} | {row.typeCodeDisplayName.PadRight(35)} | {row.authorInstitution.institutionName.PadRight(35)} | {row.healthcareFacilityTypeCodeDisplayName.PadRight(35)}");
+            //Console.WriteLine($"DocumentId: {row.documentId}");
+            //Console.WriteLine($"ClassCode DisplayName: {row.classCodeDisplayName}");
+            //Console.WriteLine($"TypeCode DisplayName: {row.typeCodeDisplayName}");
+            //Console.WriteLine($"Creation Time UTC: {row.creationTimeUTC.Add(TimeSpan.FromHours(UseTimeZone)).ToString()}");
+            //Console.WriteLine($"Service Start Time UTC: {row.serviceStartTimeUTC.Add(TimeSpan.FromHours(UseTimeZone)).ToString()}");
+            //Console.WriteLine($"Service Stop Time UTC: {row.serviceStopTimeUTC.Add(TimeSpan.FromHours(UseTimeZone)).ToString()}");            
+            //Console.WriteLine($"Healthcare Facility TypeCode DisplayName: {row.healthcareFacilityTypeCodeDisplayName}");
+            //Console.WriteLine($"Repository Unique Id: {row.repositoryUniqueId}");
+            //Console.WriteLine($"Status: {row.status}");
+            //Console.WriteLine($"Remove Reason: {row.removeReason}");
+            //Console.WriteLine($"Record Version: {row.recordVersion}");
+            //Console.WriteLine($"AuthorInstitution.InstitutionName: {row.authorInstitution.institutionName}");
 
 
 

@@ -6,5 +6,15 @@ using System.Threading.Tasks;
 
 namespace PCEHR.Test.Support
 {
-  public enum PatientType { FrankHarding, CalebDerrington, JackieHunt }
+  public enum PatientType 
+  { 
+    FrankHarding, 
+    CalebDerrington, 
+    JackieHunt, 
+    MaxwellThomas, 
+    LudwigHOBBS, 
+    LarryBLAKE, 
+    AliceLAMM, 
+    MarieVOSLOO 
+  }
 }
